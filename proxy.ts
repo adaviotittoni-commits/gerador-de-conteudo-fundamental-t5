@@ -2,7 +2,28 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+const publicRoutes = ['/login', '/register', '/forgot-password', '/callback']
+
+const protectedRoutes = [
+  '/dashboard',
+  '/profile',
+  '/projects',
+  '/api-keys',
+  '/history',
+  '/usage',
+]
+
+function isPublicRoute(pathname: string) {
+  return publicRoutes.some((route) => pathname.startsWith(route))
+}
+
+function isProtectedRoute(pathname: string) {
+  return protectedRoutes.some((route) => pathname.startsWith(route))
+}
+
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -38,16 +59,26 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  // Root → redirect to dashboard or login
+  if (pathname === '/') {
+    const target = user ? '/dashboard' : '/login'
+    return NextResponse.redirect(new URL(target, request.url))
   }
 
-  // Onboarding redirect: if user has no profile name, redirect to profile page
-  if (
-    user &&
-    request.nextUrl.pathname.startsWith('/dashboard') &&
-    request.nextUrl.pathname !== '/dashboard/profile'
-  ) {
+  // Authenticated user on auth pages → redirect to dashboard
+  if (user && isPublicRoute(pathname)) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  // Unauthenticated user on protected pages → redirect to login
+  if (!user && isProtectedRoute(pathname)) {
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('next', pathname)
+    return NextResponse.redirect(loginUrl)
+  }
+
+  // Onboarding: user without profile name → redirect to /profile
+  if (user && isProtectedRoute(pathname) && pathname !== '/profile') {
     const { data: profile } = await supabase
       .from('profiles')
       .select('full_name')
@@ -55,9 +86,7 @@ export async function proxy(request: NextRequest) {
       .single()
 
     if (!profile?.full_name) {
-      return NextResponse.redirect(
-        new URL('/dashboard/profile', request.url),
-      )
+      return NextResponse.redirect(new URL('/profile', request.url))
     }
   }
 
@@ -65,5 +94,17 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: [
+    '/',
+    '/dashboard/:path*',
+    '/profile/:path*',
+    '/projects/:path*',
+    '/api-keys/:path*',
+    '/history/:path*',
+    '/usage/:path*',
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/callback',
+  ],
 }
