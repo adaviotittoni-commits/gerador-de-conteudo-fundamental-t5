@@ -14,11 +14,11 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/dashboard/projects', label: 'Projetos', icon: FolderKanban },
-  { href: '/dashboard/history', label: 'Historico', icon: History },
-  { href: '/dashboard/api-keys', label: 'API Keys', icon: Key },
-  { href: '/dashboard/usage', label: 'Metricas', icon: BarChart3 },
-  { href: '/dashboard/profile', label: 'Perfil', icon: UserCircle },
+  { href: '/projects', label: 'Projetos', icon: FolderKanban },
+  { href: '/history', label: 'Historico', icon: History },
+  { href: '/api-keys', label: 'API Keys', icon: Key },
+  { href: '/usage', label: 'Metricas', icon: BarChart3 },
+  { href: '/profile', label: 'Perfil', icon: UserCircle },
 ]
 
 export function Sidebar() {

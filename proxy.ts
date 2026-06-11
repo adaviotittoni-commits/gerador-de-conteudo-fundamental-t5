@@ -81,11 +81,11 @@ export async function proxy(request: NextRequest) {
   if (user && isProtectedRoute(pathname) && pathname !== '/profile') {
     const { data: profile } = await supabase
       .from('profiles')
-      .select('full_name')
+      .select('name')
       .eq('id', user.id)
       .single()
 
-    if (!profile?.full_name) {
+    if (!profile?.name) {
       return NextResponse.redirect(new URL('/profile', request.url))
     }
   }
