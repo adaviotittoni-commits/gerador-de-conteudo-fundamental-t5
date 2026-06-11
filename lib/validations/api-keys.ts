@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const apiKeyProviders = ['openai', 'gemini', 'anthropic'] as const
+export const apiKeyProviders = ['openai', 'google_gemini', 'anthropic'] as const
 export type ApiKeyProvider = (typeof apiKeyProviders)[number]
 
 export const addApiKeySchema = z.object({

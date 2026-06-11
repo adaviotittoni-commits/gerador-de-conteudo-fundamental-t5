@@ -9,7 +9,7 @@ import type { ApiKey } from '@/types'
 
 const providerConfig = {
   openai: { label: 'OpenAI', icon: '🤖' },
-  gemini: { label: 'Google Gemini', icon: '✨' },
+  google_gemini: { label: 'Google Gemini', icon: '✨' },
   anthropic: { label: 'Anthropic', icon: '🧠' },
 } as const
 
@@ -22,7 +22,7 @@ function StatusDot({ status }: { status: ApiKey['status'] }) {
           status === 'valid' &&
             'bg-success shadow-[0_0_8px_rgba(34,197,94,0.4)]',
           status === 'invalid' && 'bg-error',
-          status === 'unchecked' && 'bg-warning',
+          status === 'pending' && 'bg-warning',
         )}
       />
       <span className="text-body-sm text-on-surface-variant capitalize">

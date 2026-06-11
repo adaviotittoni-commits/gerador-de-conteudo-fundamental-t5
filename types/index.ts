@@ -16,10 +16,10 @@ export interface Profile {
 export interface ApiKey {
   id: string
   user_id: string
-  provider: 'openai' | 'gemini' | 'anthropic'
+  provider: 'openai' | 'google_gemini' | 'anthropic'
   encrypted_key: string
   key_suffix: string
-  status: 'valid' | 'invalid' | 'unchecked'
+  status: 'valid' | 'invalid' | 'pending'
   created_at: string
   updated_at: string
 }

@@ -14,7 +14,7 @@ import type { ApiKey } from '@/types'
 
 const providerLabels: Record<ApiKey['provider'], string> = {
   openai: 'OpenAI',
-  gemini: 'Google Gemini',
+  google_gemini: 'Google Gemini',
   anthropic: 'Anthropic',
 }
 

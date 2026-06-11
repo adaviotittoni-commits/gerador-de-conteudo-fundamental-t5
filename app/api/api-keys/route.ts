@@ -17,7 +17,7 @@ export async function GET() {
 
   const { data: keys, error } = await supabase
     .from('api_keys')
-    .select('id, user_id, provider, key_suffix, status, created_at, updated_at')
+    .select('id, user_id, provider, key_hint, status, created_at, updated_at')
     .eq('user_id', user.id)
     .order('created_at', { ascending: true })
 
@@ -28,7 +28,12 @@ export async function GET() {
     )
   }
 
-  return NextResponse.json({ keys: keys ?? [] })
+  const mappedKeys = (keys ?? []).map((k) => ({
+    ...k,
+    key_suffix: k.key_hint,
+  }))
+
+  return NextResponse.json({ keys: mappedKeys })
 }
 
 export async function POST(request: Request) {
@@ -83,12 +88,12 @@ export async function POST(request: Request) {
         user_id: user.id,
         provider,
         encrypted_key: encryptedKey,
-        key_suffix: keySuffix,
-        status: 'unchecked',
+        key_hint: keySuffix,
+        status: 'pending',
       },
       { onConflict: 'user_id,provider' },
     )
-    .select('id, user_id, provider, key_suffix, status, created_at, updated_at')
+    .select('id, user_id, provider, key_hint, status, created_at, updated_at')
     .single()
 
   if (error) {
@@ -104,8 +109,10 @@ export async function POST(request: Request) {
     )
   }
 
+  const mappedKey = { ...apiKey, key_suffix: apiKey.key_hint }
+
   return NextResponse.json(
-    { key: apiKey, message: 'API key saved successfully' },
+    { key: mappedKey, message: 'API key saved successfully' },
     { status: 201 },
   )
 }

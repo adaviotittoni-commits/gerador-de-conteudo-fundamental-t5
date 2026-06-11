@@ -32,7 +32,7 @@ import {
 
 const providerLabels: Record<ApiKeyProvider, string> = {
   openai: 'OpenAI',
-  gemini: 'Google Gemini',
+  google_gemini: 'Google Gemini',
   anthropic: 'Anthropic',
 }
 
