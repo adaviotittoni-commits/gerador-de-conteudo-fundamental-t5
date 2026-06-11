@@ -68,7 +68,7 @@ export default function NewProjectPage() {
       }
 
       const data = await res.json()
-      router.push(`/dashboard/projects/${data.project.id}`)
+      router.push(`/projects/${data.project.id}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {

@@ -18,7 +18,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <Link
-          href="/dashboard/projects/new"
+          href="/projects/new"
           className="btn-gradient-primary inline-flex items-center gap-2 rounded-lg px-4 py-2.5 font-mono text-label-md"
         >
           <Plus className="h-4 w-4" />

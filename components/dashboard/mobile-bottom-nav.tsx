@@ -12,9 +12,9 @@ import { cn } from '@/lib/utils'
 
 const mobileNavItems = [
   { href: '/dashboard', label: 'Home', icon: LayoutDashboard },
-  { href: '/dashboard/projects', label: 'Projetos', icon: FolderKanban },
-  { href: '/dashboard/usage', label: 'Metricas', icon: BarChart3 },
-  { href: '/dashboard/profile', label: 'Perfil', icon: UserCircle },
+  { href: '/projects', label: 'Projetos', icon: FolderKanban },
+  { href: '/usage', label: 'Metricas', icon: BarChart3 },
+  { href: '/profile', label: 'Perfil', icon: UserCircle },
 ]
 
 export function MobileBottomNav() {

@@ -62,7 +62,7 @@ export function ProjectCard({ project, onDelete }: ProjectCardProps) {
       )}
     >
       <Link
-        href={`/dashboard/projects/${project.id}`}
+        href={`/projects/${project.id}`}
         className="block space-y-3"
       >
         {/* Header: title + status badge */}

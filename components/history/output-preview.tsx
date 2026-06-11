@@ -128,7 +128,7 @@ export function OutputPreview({ output, className }: OutputPreviewProps) {
           )}
 
           <Link
-            href={`/dashboard/projects/${output.project_id}`}
+            href={`/projects/${output.project_id}`}
             className="p-2 text-on-surface-variant hover:text-primary rounded-lg hover:bg-white/5 transition-colors"
             aria-label="Ver Projeto"
           >

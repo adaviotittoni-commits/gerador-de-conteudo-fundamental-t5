@@ -19,7 +19,7 @@ export function DashboardEmptyState() {
       </p>
 
       <Link
-        href="/dashboard/projects/new"
+        href="/projects/new"
         className="btn-gradient-primary mt-6 inline-flex items-center gap-2 rounded-lg px-6 py-2.5 font-mono text-label-md"
       >
         Criar Primeiro Projeto
